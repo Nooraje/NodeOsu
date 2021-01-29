@@ -1,4 +1,4 @@
-const link = require("../links.json")
+const link = require("../jsons/links.json")
 const Discord = require("discord.js");
 const fs = require('fs');
 
@@ -16,7 +16,7 @@ module.exports = {
 			link[message.author.id] = {
 				nick: nick
 			}
-			fs.writeFile("./links.json", JSON.stringify(link, null, 4), err => {
+			fs.writeFile("./jsons/links.json", JSON.stringify(link, null, 4), err => {
 				if (err) throw err
 				message.channel.send("Your nickname linked as " + `**${nick}**`)
 			})

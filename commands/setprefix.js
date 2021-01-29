@@ -1,4 +1,4 @@
-const prefixes = require("../prefixes.json")
+const prefixes = require("../jsons/prefixes.json")
 const Discord = require("discord.js");
 const fs = require('fs');
 
@@ -16,7 +16,7 @@ module.exports = {
 		prefixes[message.guild.id] = {
 			prefix: prefix
 		}
-		fs.writeFile("./prefixes.json", JSON.stringify(prefixes, null, 4), err => {
+		fs.writeFile("./jsons/prefixes.json", JSON.stringify(prefixes, null, 4), err => {
 			if (err) throw err
 			message.channel.send("Your prefix linked as " + `**${prefix}**`)
 		})
