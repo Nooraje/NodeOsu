@@ -1,4 +1,4 @@
-const { prefix } = require('../jsons/configs.json');
+const prefixes = require("../jsons/prefixes.json")
 
 module.exports = {
 	name: 'help',
@@ -10,6 +10,7 @@ module.exports = {
 	guildOnly: false,
 	permissions: false,
 	execute(message, args) {
+		prefix = prefixes[message.guild.id].prefix
 		const data = [];
 		const { commands } = message.client;
 		

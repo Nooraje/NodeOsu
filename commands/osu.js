@@ -28,7 +28,7 @@ module.exports = {
             message.channel.send("Please link yourself. **!link <nick>**")
             return
         }
-        api.getuser(username).then(getuser => {
+        api.get_user(username).then(getuser => {
             osuprofilepicture = "http://s.ppy.sh/a/" + getuser[0]["user_id"];
             countryflagicon = "https://www.countryflags.io/" + getuser[0]["country"] + "/flat/64.png";
             username = getuser[0]["username"]
