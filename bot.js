@@ -15,7 +15,8 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', () => {
-	console.log('Ready!');
+    console.log('Ready!');
+    //client.channels.cache.get("780451569786290236").join();
 });
 
 client.on('message', message => {
@@ -41,7 +42,7 @@ client.on('message', message => {
     if (command.permissions) {
         const authorPerms = message.channel.permissionsFor(message.author);
         if (!authorPerms || !authorPerms.has(command.permissions)) {
-            return message.reply('You can not do this!');
+            return message.reply('You can\'t do this!');
         }
     }
 
@@ -82,5 +83,15 @@ client.on('message', message => {
         message.reply('there was an error trying to execute that command!');
     }
 });
+
+client.on("guildCreate", guild => {
+    console.log("Joined a new guild: " + guild.name);
+    prefixes[guild.id] = {
+        prefix: "!"
+    }
+    fs.writeFile("./jsons/prefixes.json", JSON.stringify(prefixes, null, 4), err => {
+        if (err) throw err
+    })
+})
 
 client.login(config.token);
