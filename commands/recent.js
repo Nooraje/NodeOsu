@@ -30,7 +30,8 @@ module.exports = {
             return
         }
         api.get_user_recent(username).then(getuser => {
-            api.get_pp(getuser[0]["beatmap_id"], getuser[0]["maxcombo"], getuser[0]["count50"], getuser[0]["count100"], getuser[0]["count300"], getuser[0]["countmiss"], getuser[0]["countkatu"], getuser[0]["countgeki"], getuser[0]["perfect"], getuser[0]["enabled_mods"])
+            text = api.get_pp(getuser[0]["beatmap_id"], getuser[0]["maxcombo"], getuser[0]["count50"], getuser[0]["count100"], getuser[0]["count300"], getuser[0]["countmiss"], getuser[0]["countkatu"], getuser[0]["countgeki"], getuser[0]["perfect"], getuser[0]["enabled_mods"])
+            console.log(text)
         })
     },
 };
