@@ -1,7 +1,4 @@
 const link = require("../jsons/links.json")
-const config = require("../jsons/configs.json")
-const Discord = require("discord.js");
-const {Beatmap, Osu: {DifficultyCalculator, PerformanceCalculator}} = require('osu-bpdpc')
 
 let api = require('../osuapi.js');
 
