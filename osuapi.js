@@ -43,7 +43,7 @@ function get_pp(beatmapid, maxcombo, count50, count100, count300, countMiss, cou
         }
         diffCalc = DifficultyCalculator.use(beatmap).setMods(score.mods).calculate()
         perfCalc = PerformanceCalculator.use(diffCalc).calculate(score).totalPerformance.toFixed(2)
-        return perfCalc
+        return perfCalc;
       })
 }
 
