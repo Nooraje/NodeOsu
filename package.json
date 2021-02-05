@@ -15,6 +15,7 @@
     "json": "^10.0.0",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
+    "onecolor": "^3.1.0",
     "opusscript": "^0.0.7",
     "osu-bpdpc": "^0.2.4",
     "request": "^2.88.2",
