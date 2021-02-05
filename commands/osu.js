@@ -34,7 +34,7 @@ module.exports = {
             username = getuser[0]["username"]
             osuprofilelink = "https://osu.ppy.sh/u/" + username
             pp_rank =
-                "**» Rank:** " +
+                "**▸ Rank:** " +
                 "#" +
                 getuser[0]["pp_rank"] +
                 " [" +
@@ -45,15 +45,15 @@ module.exports = {
             pp_raw = getuser[0]["pp_raw"];
             accuracy = getuser[0]["accuracy"] / 1;
             accuracyy = accuracy.toFixed(2);
-            playcount = "**» Playcount:** " + getuser[0]["playcount"]
+            playcount = "**▸ Playcount:** " + getuser[0]["playcount"]
             hoursplayedmath = getuser[0]["total_seconds_played"] / 60 / 60;
-            hoursplayed = "**» Hours Played:** " + hoursplayedmath.toFixed(0);
+            hoursplayed = "**▸ Hours Played:** " + hoursplayedmath.toFixed(0);
             joindate = getuser[0]["join_date"]
             desc =
-                `**» Username:** ${username}\n` +
+                `**▸ Username:** ${username}\n` +
                 `${pp_rank}\n` +
-                `**» Total PP:** ${pp_raw}\n` +
-                `**» Hit Accuracy:** ${accuracyy}%\n` +
+                `**▸ Total PP:** ${pp_raw}\n` +
+                `**▸ Hit Accuracy:** ${accuracyy}%\n` +
                 `${playcount}\n` +
                 `${hoursplayed}`;
             embed = new Discord.MessageEmbed()
@@ -61,7 +61,7 @@ module.exports = {
                 .setDescription(desc)
                 .setThumbnail(osuprofilepicture + `?${api.randomnumber(10000)}`)
                 .setColor(message.member.displayHexColor)
-                .setFooter("»» Join Date: " + joindate);
+            //.setFooter("▸▸ Join Date: " + joindate);
             message.channel.send(embed);
         }).catch(err => {
             message.channel.send("Something went wrong.. Please specify a correct nickname.")
