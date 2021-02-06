@@ -53,8 +53,7 @@ module.exports = {
             var date_in = new Date(d);
             var date_out = new Date(formattedDate);
             var seconds = Math.abs(date_out.getTime() - date_in.getTime()) / 1000;
-            saat = seconds / 3600 - 3
-            saniye = saat * 3600
+            saniye = seconds / 3600 - 3 * 3600 //due to turkey timezone i add -3
             countryflagicon = "https://www.countryflags.io/" + getuser[0]["country"] + "/flat/64.png";
             acc = api.accuracyCalc(c300, c100, c50, cmiss)
             api.get_pp(getuser[0]["beatmap_id"], getuser[0]["maxcombo"], c50, c100, c300, cmiss, getuser[0]["perfect"], getuser[0]["enabled_mods"])
