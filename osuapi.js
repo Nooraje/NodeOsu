@@ -68,8 +68,6 @@ function get_pp(beatmapid, maxcombo, count50, count100, count300, countmiss, per
         }
         diffCalc = DifficultyCalculator.use(beatmap).setMods(score.mods).calculate()
         perfCalc = PerformanceCalculator.use(diffCalc).calculate(score).totalPerformance.toFixed(0)
-        //console.log(beatmaplink)
-        //console.log(score)
         return perfCalc
     })
 }
@@ -110,8 +108,6 @@ function get_if_fc_pp(beatmapid, maxcombo, count50, count100, count300, perfect,
         }
         diffCalc = DifficultyCalculator.use(beatmap).setMods(score.mods).calculate()
         perfCalc = PerformanceCalculator.use(diffCalc).calculate(score).totalPerformance.toFixed(0)
-        console.log(beatmaplink)
-        //console.log(score)
         return perfCalc
     })
 }
@@ -157,12 +153,10 @@ function secondto(second) {
         return `**${total_minutes.toFixed(0)} minutes** ago`
     } else if (total_hours < 24) {
         return `**${total_hours.toFixed(0)} hours** ago`
-    } else if (total_days < 24) {
+    } else if (total_days < 30) {
         return `**${total_days.toFixed(0)} days** ago`
-    } else if (total_months < 24) {
+    } else if (total_months < 12) {
         return `**${total_moths.toFixed(0)} months** ago`
-    } else if (total_years < 24) {
-        return `**${total_years.toFixed(0)} years** ago`
     }
 }
 
