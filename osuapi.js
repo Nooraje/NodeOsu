@@ -74,7 +74,22 @@ function get_pp(beatmapid, maxcombo, count50, count100, count300, countmiss, per
 
 function num_to_mod(num) {
     data = []
-    if (num == 0) data.push("No Mod,")
+    if (num == 0) data.push("No Mod")
+    if (num & 1 << 0) data.push("NF")
+    if (num & 1 << 1) data.push("EZ")
+    if (num & 1 << 2) data.push("TD")
+    if (num & 1 << 3) data.push("HD")
+    if (num & 1 << 4) data.push("HR")
+    if (num & 1 << 5) data.push("SD")
+    if (num & 1 << 6) data.push("DT")
+    if (num & 1 << 7) data.push("RX")
+    if (num & 1 << 8) data.push("HT")
+    if (num & 1 << 9) data.push("NC")
+    if (num & 1 << 10) data.push("FL")
+    if (num & 1 << 12) data.push("SO")
+    if (num & 1 << 14) data.push("PF")
+    if (num & 1 << 20) data.push("FI")
+    if (num & 1 << 29) data.push("v2")
     return data
 }
 
