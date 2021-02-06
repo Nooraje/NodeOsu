@@ -65,17 +65,19 @@ module.exports = {
                             desc += (`**[${getbeatmap[0]["title"]} [${getbeatmap[0]["version"]}]](${beatmapsetlink})**\n`)
                             star = getbeatmap[0]["difficultyrating"] / 1
                             mod = api.num_to_mod(getuser[0]["enabled_mods"] * 1)
-                            console.log(mod)
-                            console.log(getuser[0]["rank"])
                             desc += (`▸ **[${star.toFixed(2)}★]** +${mod} | ${getuser[0]["score"]} - ${api.get_rank_emote(getuser[0]["rank"])}\n▸ **${pp}**pp | `)
                         })
                     api.get_beatmap(getuser[0]["beatmap_id"] * 1)
                         .then(function (getbeatmap) {
+                            var completion = 0;
+                            totalhits = parseInt(getuser[0]["countmiss"]) + parseInt(getuser[0]["count50"]) + parseInt(getuser[0]["count100"]) + parseInt(getuser[0]["count300"]);
+                            objects = parseInt(getbeatmap[0]["count_normal"]) + parseInt(getbeatmap[0]["count_slider"]) + parseInt(getbeatmap[0]["count_spinner"]);
+                            completion = (Math.floor(((totalhits / objects)) * 10000) / 100);
                             beatmap_uid = getbeatmap[0]["beatmap_id"] * 1
                             beatmap_maxcombo = getbeatmap[0]["max_combo"] * 1
                             api.get_if_fc_pp(beatmap_uid, beatmap_maxcombo, c50, c100, c300, getuser[0]["enabled_mods"])
                                 .then(function (iffcpp) {
-                                    desc += (`IF FC: **${iffcpp}**pp | x${getuser[0]["maxcombo"]}/**${beatmap_maxcombo}**\n▸ ${acc}% | ${c100 * 1}x${api.get_onehundred_emote()} | ${c50 * 1}x${api.get_fifty_emote()} | ${cmiss * 1}${api.get_miss_emote()}\n▸ Try **#${try_counter}** | ${api.secondto(saniye)}`)
+                                    desc += (`IF FC: **${iffcpp}**pp | x${getuser[0]["maxcombo"]}/**${beatmap_maxcombo}**\n▸ ${acc}% | ${c100 * 1}x${api.get_onehundred_emote()} | ${c50 * 1}x${api.get_fifty_emote()} | ${cmiss * 1}${api.get_miss_emote()}\n▸ Try **#${try_counter}** | ${api.secondto(saniye)}\n▸ Map Completion: ${completion}%`)
                                     api.get_user(username).then(getuser => {
                                         countryflagicon = "https://www.countryflags.io/" + getuser[0]["country"] + "/flat/64.png";
                                         username = getuser[0]["username"]
