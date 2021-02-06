@@ -97,6 +97,7 @@ module.exports = {
                                             .setColor(message.member.displayHexColor)
                                             .setImage(`https://assets.ppy.sh/beatmaps/${getbeatmap[0]['beatmapset_id']}/covers/cover.jpg`)
                                         message.channel.send(embed);
+                                        console.log(`${message.createdTimestamp - Date.now()}`)
                                     })
                                 })
                         })
