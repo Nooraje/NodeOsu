@@ -76,21 +76,21 @@ function get_pp(beatmapid, maxcombo, count50, count100, count300, countmiss, per
 
 function num_to_mod(num) {
     data = []
-    if(num == 0) data.push("No Mod,") 
+    if (num == 0) data.push("No Mod,")
     return data
 }
 
 function get_rank_emote(rank) {
-    if(rank == "A") {
+    if (rank == "A") {
         return "<:A_Emote:783829607982956565>"
     }
-    if(rank == "B") {
+    if (rank == "B") {
         return "<:B_Emote:783829608222425138>"
     }
-    if(rank == "C") {
+    if (rank == "C") {
         return "<:C_Emote:783829608235401216>"
     }
-    if(rank == "F") {
+    if (rank == "F") {
         return "<:F_Emote:783826073997148202>"
     }
 }
@@ -142,6 +142,30 @@ function get_miss_emote() {
     return "<:Miss_Emote:783826074052067369>"
 }
 
+function secondto(second) {
+    total_minutes = second / 60
+    total_hours = total_minutes / 60
+    total_days = total_hours / 24
+    total_months = total_days / 30
+    total_years = total_months / 12
+
+    if(second < 30) {
+        return "Submitted **Just Now**"
+    } else if (second < 60) {
+        return `**${second.toFixed(0)} seconds** ago`
+    } else if (total_minutes < 60) {
+        return `**${total_minutes.toFixed(0)} minutes** ago`
+    } else if (total_hours < 24) {
+        return `**${total_hours.toFixed(0)} hours** ago`
+    } else if (total_days < 24) {
+        return `**${total_days.toFixed(0)} days** ago`
+    } else if (total_months < 24) {
+        return `**${total_moths.toFixed(0)} months** ago`
+    } else if (total_years < 24) {
+        return `**${total_years.toFixed(0)} years** ago`
+    }
+}
+
 module.exports = {
     randomnumber,
     get_user,
@@ -154,5 +178,6 @@ module.exports = {
     get_rank_emote,
     get_onehundred_emote,
     get_fifty_emote,
-    get_miss_emote
+    get_miss_emote,
+    secondto
 }
