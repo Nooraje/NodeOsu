@@ -42,18 +42,16 @@ module.exports = {
             c100 = getuser[0]["count100"]
             c300 = getuser[0]["count300"]
             cmiss = getuser[0]["countmiss"]
-            var d, t;
             d = new Date();
             d = (d.toLocaleString()).split(' ');
-            t = d[1];
-            d = d[0].split('/');
-            d = d[0] + ' ' + t;
+            d = d[0] + ' ' + d[1];
             var date = getuser[0]["date"]
             var formattedDate = moment(date).format('DD.MM.yyyy HH:mm:ss');
             var date_in = new Date(d);
             var date_out = new Date(formattedDate);
             var seconds = Math.abs(date_out.getTime() - date_in.getTime()) / 1000;
-            saniye = seconds / 3600 - 3 * 3600 //due to turkey timezone i add -3
+            saat = seconds / 3600 - 3
+            saniye = saat * 3600
             countryflagicon = "https://www.countryflags.io/" + getuser[0]["country"] + "/flat/64.png";
             acc = api.accuracyCalc(c300, c100, c50, cmiss)
             api.get_pp(getuser[0]["beatmap_id"], getuser[0]["maxcombo"], c50, c100, c300, cmiss, getuser[0]["perfect"], getuser[0]["enabled_mods"])
@@ -68,15 +66,21 @@ module.exports = {
                         })
                     api.get_beatmap(getuser[0]["beatmap_id"] * 1)
                         .then(function (getbeatmap) {
-                            var completion = 0;
-                            totalhits = parseInt(getuser[0]["countmiss"]) + parseInt(getuser[0]["count50"]) + parseInt(getuser[0]["count100"]) + parseInt(getuser[0]["count300"]);
-                            objects = parseInt(getbeatmap[0]["count_normal"]) + parseInt(getbeatmap[0]["count_slider"]) + parseInt(getbeatmap[0]["count_spinner"]);
-                            completion = (Math.floor(((totalhits / objects)) * 10000) / 100);
+                            console.log(getuser[0]["rank"])
+                            if (getuser[0]["rank"] == "F") {
+                                var completion = 0;
+                                totalhits = parseInt(getuser[0]["countmiss"]) + parseInt(getuser[0]["count50"]) + parseInt(getuser[0]["count100"]) + parseInt(getuser[0]["count300"]);
+                                objects = parseInt(getbeatmap[0]["count_normal"]) + parseInt(getbeatmap[0]["count_slider"]) + parseInt(getbeatmap[0]["count_spinner"]);
+                                completion = (Math.floor(((totalhits / objects)) * 10000) / 100);
+                                comptext = `\n▸ Map Completion: ${completion}%`
+                            } else {
+                                comptext = ``
+                            }
                             beatmap_uid = getbeatmap[0]["beatmap_id"] * 1
                             beatmap_maxcombo = getbeatmap[0]["max_combo"] * 1
                             api.get_if_fc_pp(beatmap_uid, beatmap_maxcombo, c50, c100, c300, getuser[0]["enabled_mods"])
                                 .then(function (iffcpp) {
-                                    desc += (`IF FC: **${iffcpp}**pp | x${getuser[0]["maxcombo"]}/**${beatmap_maxcombo}**\n▸ ${acc}% | ${c100 * 1}x${api.get_onehundred_emote()} | ${c50 * 1}x${api.get_fifty_emote()} | ${cmiss * 1}${api.get_miss_emote()}\n▸ Try **#${try_counter}** | ${api.secondto(saniye)}\n▸ Map Completion: ${completion}%`)
+                                    desc += (`IF FC: **${iffcpp}**pp | x${getuser[0]["maxcombo"]}/**${beatmap_maxcombo}**\n▸ ${acc}% | ${c100 * 1}x${api.get_onehundred_emote()} | ${c50 * 1}x${api.get_fifty_emote()} | ${cmiss * 1}${api.get_miss_emote()}\n▸ Try **#${try_counter}** | ${api.secondto(saniye)}${comptext}`)
                                     api.get_user(username).then(getuser => {
                                         countryflagicon = "https://www.countryflags.io/" + getuser[0]["country"] + "/flat/64.png";
                                         username = getuser[0]["username"]
@@ -102,7 +106,9 @@ module.exports = {
                         })
                 })
         }).catch(err => {
-            return message.channel.send("Something went wrong.. Please specify a correct nickname.")
+            if (err.message == "Cannot read property 'beatmap_id' of undefined") {
+                message.channel.send(`~~${username}~~ **did not submit anything recently.**`)
+            }
         });
     },
 };
