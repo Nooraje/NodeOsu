@@ -23,7 +23,7 @@ client.on('message', message => {
     try {
         prefix = prefixes[message.guild.id].prefix
     } catch {
-        return;
+        prefix = "!"
     }
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -86,12 +86,6 @@ client.on('message', message => {
 
 client.on("guildCreate", guild => {
     console.log("Joined a new guild: " + guild.name);
-    prefixes[guild.id] = {
-        prefix: "!"
-    }
-    fs.writeFile("./jsons/prefixes.json", JSON.stringify(prefixes, null, 4), err => {
-        if (err) throw err
-    })
 })
 
 client.login(config.token);

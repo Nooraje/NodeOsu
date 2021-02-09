@@ -23,7 +23,7 @@ function get_user(username) {
             obj = JSON.parse(body)
             return obj;
         } catch {
-            return []
+            return "[]"
         }
     });
 }
@@ -35,19 +35,19 @@ function get_user_recent(username) {
             obj = JSON.parse(body)
             return obj;
         } catch {
-            return []
+            return "[]"
         }
     });
 }
 
-function get_beatmap(beatmapid) {
-    beatmap_url = `${beatmap_api_url}?k=${api_key}&b=${beatmapid}`
+function get_beatmap(beatmapid, mods) {
+    beatmap_url = `${beatmap_api_url}?k=${api_key}&b=${beatmapid}&mods=${mods}`
     return rp(beatmap_url).then(body => {
         try {
             obj = JSON.parse(body)
             return obj;
         } catch {
-            return []
+            return "[]"
         }
     });
 }
@@ -63,6 +63,25 @@ function get_pp(beatmapid, maxcombo, count50, count100, count300, countmiss, per
             count100: count100 * 1,
             count300: count300 * 1,
             countMiss: countmiss * 1,
+            perfect: perfect * 1,
+            mods: mods * 1,
+        }
+        diffCalc = DifficultyCalculator.use(beatmap).setMods(score.mods).calculate()
+        perfCalc = PerformanceCalculator.use(diffCalc).calculate(score).totalPerformance.toFixed(0)
+        return perfCalc
+    })
+}
+
+function get_if_fc_pp(beatmapid, maxcombo, count50, count100, count300, perfect, mods) {
+    beatmaplink = `https://osu.ppy.sh/osu/${beatmapid}`
+    return rp(beatmaplink).then(osu => {
+        let beatmap = Beatmap.fromOsu(osu)
+        let score = {
+            maxcombo: maxcombo * 1,
+            count50: count50 * 1,
+            count100: count100 * 1,
+            count300: count300 * 1,
+            countMiss: 0,
             perfect: perfect * 1,
             mods: mods * 1,
         }
@@ -106,25 +125,6 @@ function get_rank_emote(rank) {
     if (rank == "F") {
         return "<:F_Emote:783826073997148202>"
     }
-}
-
-function get_if_fc_pp(beatmapid, maxcombo, count50, count100, count300, perfect, mods) {
-    beatmaplink = `https://osu.ppy.sh/osu/${beatmapid}`
-    return rp(beatmaplink).then(osu => {
-        let beatmap = Beatmap.fromOsu(osu)
-        let score = {
-            maxcombo: maxcombo * 1,
-            count50: count50 * 1,
-            count100: count100 * 1,
-            count300: count300 * 1,
-            countMiss: 0,
-            perfect: perfect * 1,
-            mods: mods * 1,
-        }
-        diffCalc = DifficultyCalculator.use(beatmap).setMods(score.mods).calculate()
-        perfCalc = PerformanceCalculator.use(diffCalc).calculate(score).totalPerformance.toFixed(0)
-        return perfCalc
-    })
 }
 
 function accuracyCalc(c300, c100, c50, misses) {
@@ -171,7 +171,7 @@ function secondto(second) {
     } else if (total_days < 30) {
         return `**${total_days.toFixed(0)} days** ago`
     } else if (total_months < 12) {
-        return `**${total_moths.toFixed(0)} months** ago`
+        return `**${total_months.toFixed(0)} months** ago`
     }
 }
 
