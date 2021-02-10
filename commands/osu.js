@@ -49,7 +49,7 @@ module.exports = {
             hoursplayedmath = getuser[0]["total_seconds_played"] / 60 / 60;
             hoursplayed = "**▸ Hours Played:** " + hoursplayedmath.toFixed(0);
             joindate = getuser[0]["join_date"]
-            desc =
+            osudesc =
                 `**▸ Username:** ${username}\n` +
                 `${pp_rank}\n` +
                 `**▸ Total PP:** ${pp_raw}\n` +
@@ -58,11 +58,12 @@ module.exports = {
                 `${hoursplayed}`;
             embed = new Discord.MessageEmbed()
                 .setAuthor("osu! Profile for " + `${username}`, countryflagicon, osuprofilelink)
-                .setDescription(desc)
+                .setDescription(osudesc)
                 .setThumbnail(osuprofilepicture + `?${api.randomnumber(10000)}`)
                 .setColor(message.member.displayHexColor)
             //.setFooter("▸▸ Join Date: " + joindate);
-            message.channel.send(embed);
+            console.log(`Osu Command ms: ${message.createdTimestamp - Date.now()}`)
+            return message.channel.send(embed);
         }).catch(err => {
             message.channel.send("Something went wrong.. Please specify a correct nickname.")
         });
