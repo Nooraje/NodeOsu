@@ -126,13 +126,19 @@ function num_to_mod(num) {
 
 function get_rank_emote(rank) {
     if (rank == "A") {
-        return "<:A_Emote:783829607982956565>"
+        return "<:A_Emote:649752233226928131>"
     }
     if (rank == "B") {
-        return "<:B_Emote:783829608222425138>"
+        return "<:B_Emote:649752243259703317>"
     }
     if (rank == "C") {
-        return "<:C_Emote:783829608235401216>"
+        return "<:C_Emote:649752253883744265>"
+    }
+    if (rank == "D") {
+        return "<:D_Emote:649752265095380993>"
+    }
+    if (rank == "S") {
+        return "<:S_Emote:649752285613785121>"
     }
     if (rank == "F") {
         return "<:F_Emote:783826073997148202>"
