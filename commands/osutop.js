@@ -33,13 +33,13 @@ module.exports = {
                     pp_raw = getuser[0]["pp_raw"];
                     pp_rank = "#" + getuser[0]["pp_rank"] + " " + getuser[0]["country"] + getuser[0]["pp_country_rank"]
                     countryflagicon = "https://www.countryflags.io/" + getuser[0]["country"] + "/flat/64.png";
-					let promises = [];
+                    let promises = [];
                     for (i = 0; i < 3; i++) {
                         promises.push(api.get_beatmap(getuserbest[i]["beatmap_id"] * 1, getuserbest[i]["enabled_mods"] * 1))
                     }
-					Promise.all(promises).then(resp => {
-						let i = 0;
-						resp.forEach(getbeatmap => {
+                    Promise.all(promises).then(resp => {
+                        let i = 0;
+                        resp.forEach(getbeatmap => {
                             d = new Date();
                             var date = getuserbest[i]["date"]
                             ms = new Date(d) - new Date(date)
@@ -50,11 +50,11 @@ module.exports = {
                             score = getuserbest[i]["score"] * 1
                             acc = api.accuracyCalc(getuserbest[i]["count300"], getuserbest[i]["count100"], getuserbest[i]["count50"], getuserbest[i]["countmiss"])
                             osutopdesc += `**${i + 1}. [${getbeatmap[0]["title"]} [${getbeatmap[0]["version"]}]](${beatmapsetlink})**\n▸ **[${star.toFixed(2)}★]** +${mod} | ${score.toLocaleString()} - ${api.get_rank_emote(getuserbest[i]["rank"])}\n▸ **${(parseInt(getuserbest[i]["pp"]))}**pp | **x${getuserbest[i]["maxcombo"]}/${getbeatmap[0]["max_combo"] * 1}**\n▸ ${acc}% | ${getuserbest[i]["count100"]}x${api.get_onehundred_emote()} | ${getuserbest[i]["count50"]}x${api.get_fifty_emote()} | ${getuserbest[i]["countmiss"]}${api.get_miss_emote()}\n▸ Score Set ${api.secondto(saniye)}\n`;
-							i++;
+                            i++;
                         });
-						console.log(osutopdesc);
-                    	res(osutopdesc);
-					})
+                        console.log(osutopdesc);
+                        res(osutopdesc);
+                    })
 
                 });
             }).catch(err => {
