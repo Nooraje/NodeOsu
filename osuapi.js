@@ -40,7 +40,19 @@ function get_user_recent(username) {
     });
 }
 
-function get_beatmap(beatmapid, mods) {
+function get_user_best(username) {
+    get_user_best_url = `${user_best_url}?k=${api_key}&u=${username}`
+    return rp(get_user_best_url).then(body => {
+        try {
+            obj = JSON.parse(body)
+            return obj;
+        } catch {
+            return "[]"
+        }
+    });
+}
+
+async function get_beatmap(beatmapid, mods) {
     beatmap_url = `${beatmap_api_url}?k=${api_key}&b=${beatmapid}&mods=${mods}`
     return rp(beatmap_url).then(body => {
         try {
@@ -160,25 +172,57 @@ function secondto(second) {
     total_months = total_days / 30
     total_years = total_months / 12
 
-    if(second < 30) {
+    if (second < 30) {
         return "Submitted **Just Now**"
     } else if (second < 60) {
-        return `**${second.toFixed(0)} seconds** ago`
+        return `**${parseInt(second)} seconds** ago`
     } else if (total_minutes < 60) {
-        return `**${total_minutes.toFixed(0)} minutes** ago`
+        return `**${parseInt(total_minutes)} minutes** ago`
     } else if (total_hours < 24) {
-        return `**${total_hours.toFixed(0)} hours** ago`
+        return `**${parseInt(total_hours)} hours** ago`
     } else if (total_days < 30) {
-        return `**${total_days.toFixed(0)} days** ago`
+        return `**${parseInt(total_days)} days** ago`
     } else if (total_months < 12) {
-        return `**${total_months.toFixed(0)} months** ago`
+        if (total_days - parseInt(total_months) * 30 >= 5) {
+            return `**${parseInt(total_months)} months ${parseInt(total_days) - parseInt(total_months) * 30} days** ago`
+        } else {
+            return `**${parseInt(total_months)} months** ago`
+        }
     }
 }
+
+function range(start, stop, step) {
+    if (typeof stop == 'undefined') {
+        // one param defined
+        stop = start;
+    }
+
+    if (typeof step == 'undefined') {
+        step = 1;
+    }
+
+    if ((step > 0 && start >= stop) || (step < 0 && start <= stop)) {
+        return [];
+    }
+
+    var result = [];
+    for (var i = start; step > 0 ? i < stop : i > stop; i += step) {
+        result.push(i);
+    }
+
+    return result;
+};
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 
 module.exports = {
     randomnumber,
     get_user,
     get_user_recent,
+    get_user_best,
     get_pp,
     accuracyCalc,
     get_if_fc_pp,
@@ -188,5 +232,7 @@ module.exports = {
     get_onehundred_emote,
     get_fifty_emote,
     get_miss_emote,
-    secondto
+    secondto,
+    range,
+    sleep
 }
