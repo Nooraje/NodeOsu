@@ -74,7 +74,6 @@ module.exports = {
                 .setDescription(osutop)
                 .setThumbnail(thumbnail)
                 .setColor(message.member.displayHexColor)
-            console.log(username)
             console.log(`Osutop Command ms: ${message.createdTimestamp - Date.now()}`)
             await message.channel.send(embed)
         } catch (err) {
