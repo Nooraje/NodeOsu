@@ -225,6 +225,12 @@ function secondto(second) {
         } else {
             return `**${parseInt(total_months)} months** ago`
         }
+    } else {
+        if(total_months - parseInt(total_years) * 12 >= 1) {
+            return `**${parseInt(total_years)} years ${parseInt(total_months - parseInt(total_years) * 12)} months** ago`
+        } else {
+            return `**${parseInt(total_years)} years** ago`
+        }
     }
 }
 
