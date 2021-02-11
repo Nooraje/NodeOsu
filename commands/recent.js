@@ -42,8 +42,7 @@ module.exports = {
             c300 = recent[0]["count300"]
             cmiss = recent[0]["countmiss"]
             d = new Date();
-            var date = recent[0]["date"]
-            ms = new Date(d) - new Date(date)
+            ms = new Date(d) - new Date(recent[0]["date"])
             saniye = ((ms / 1000) / 3600 - 3) * 3600
             countryflagicon = "https://www.countryflags.io/" + recent[0]["country"] + "/flat/64.png";
             acc = api.accuracyCalc(c300, c100, c50, cmiss)
@@ -90,6 +89,8 @@ module.exports = {
         }).catch(err => {
             if (err.message == "Cannot read property 'beatmap_id' of undefined") {
                 message.channel.send(`~~${username}~~ **did not submit anything recently.**`)
+            } else {
+                console.log(err)
             }
         });
     },

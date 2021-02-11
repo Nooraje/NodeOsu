@@ -13,6 +13,7 @@ module.exports = {
     permissions: false,
     async execute(message, args) {
         //my stupid way to get username
+        let username;
         try {
             if (!args[0]) {
                 username = link[message.author.id].nick
@@ -27,7 +28,7 @@ module.exports = {
         let promise = new Promise((res, rej) => {
             api.get_user_best(username).then(getuserbest => {
                 api.get_user(username).then(function (getuser) {
-                    var osutopdesc = ``
+                    let osutopdesc = ``
                     username = getuser[0]["username"]
                     pp_raw = getuser[0]["pp_raw"];
                     pp_rank = "#" + getuser[0]["pp_rank"] + " " + getuser[0]["country"] + getuser[0]["pp_country_rank"]
@@ -40,15 +41,15 @@ module.exports = {
                     Promise.all(promises).then(resp => {
                         let i = 0;
                         resp.forEach(getbeatmap => {
-                            d = new Date();
-                            var date = getuserbest[i]["date"]
-                            ms = new Date(d) - new Date(date)
-                            saniye = ((ms / 1000) / 3600 - 3) * 3600
-                            beatmapsetlink = `https://osu.ppy.sh/beatmapsets/${getbeatmap[0]["beatmapset_id"]}#osu/${getbeatmap[0]["beatmap_id"]}`
-                            star = getbeatmap[0]["difficultyrating"] / 1
-                            mod = api.num_to_mod(getuserbest[i]["enabled_mods"] * 1)
-                            score = getuserbest[i]["score"] * 1
-                            acc = api.accuracyCalc(getuserbest[i]["count300"], getuserbest[i]["count100"], getuserbest[i]["count50"], getuserbest[i]["countmiss"])
+                            let d = new Date();
+                            let ms = new Date(d) - new Date(getuserbest[i]["date"])
+                            let saniye = ((ms / 1000) / 3600 - 3) * 3600
+                            console.log(saniye)
+                            let beatmapsetlink = `https://osu.ppy.sh/beatmapsets/${getbeatmap[0]["beatmapset_id"]}#osu/${getbeatmap[0]["beatmap_id"]}`
+                            let star = getbeatmap[0]["difficultyrating"] / 1
+                            let mod = api.num_to_mod(getuserbest[i]["enabled_mods"] * 1)
+                            let score = getuserbest[i]["score"] * 1
+                            let acc = api.accuracyCalc(getuserbest[i]["count300"], getuserbest[i]["count100"], getuserbest[i]["count50"], getuserbest[i]["countmiss"])
                             osutopdesc += `**${i + 1}. [${getbeatmap[0]["title"]} [${getbeatmap[0]["version"]}]](${beatmapsetlink})**\n`
                             osutopdesc += `▸ **[${star.toFixed(2)}★]** +${mod} | ${score.toLocaleString()} - ${api.get_rank_emote(getuserbest[i]["rank"])}\n`
                             osutopdesc += `▸ **${(parseInt(getuserbest[i]["pp"]))}**pp | **x${getuserbest[i]["maxcombo"]}/${getbeatmap[0]["max_combo"] * 1}**\n`
@@ -59,13 +60,15 @@ module.exports = {
                             i++;
                         });
                         res(osutopdesc);
-                        res(thumbnail)
-                        res(userid)
+                        res(thumbnail);
+                        res(userid);
                     })
 
                 }).catch(err => {
-                    if (err.message == "Cannot read property 'username' of undefined") {
+                    if (err.message === "Cannot read property 'username' of undefined") {
                         message.channel.send(`~~${username}~~ **was not found.**`)
+                    } else {
+                        console.log(err)
                     }
                 });
             })
