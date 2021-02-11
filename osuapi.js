@@ -52,7 +52,7 @@ function get_user_best(username) {
     });
 }
 
-async function get_beatmap(beatmapid, mods) {
+function get_beatmap(beatmapid, mods) {
     beatmap_url = `${beatmap_api_url}?k=${api_key}&b=${beatmapid}&mods=${mods}`
     return rp(beatmap_url).then(body => {
         try {
@@ -112,16 +112,38 @@ function num_to_mod(num) {
     if (num & 1 << 3) data.push("HD")
     if (num & 1 << 4) data.push("HR")
     if (num & 1 << 5) data.push("SD")
-    if (num & 1 << 6) data.push("DT")
     if (num & 1 << 7) data.push("RX")
     if (num & 1 << 8) data.push("HT")
-    if (num & 1 << 9) data.push("NC")
+    if (num & 1 << 9) {
+        data.push("NC")
+    } else if (num & 1 << 6) {
+        data.push("DT")
+    }
     if (num & 1 << 10) data.push("FL")
     if (num & 1 << 12) data.push("SO")
     if (num & 1 << 14) data.push("PF")
     if (num & 1 << 20) data.push("FI")
     if (num & 1 << 29) data.push("v2")
     return data
+}
+
+function num_to_num_but_diff_increase_mods_only(number) {
+    total = 0
+    if (number & 1 << 4) {
+        total += 1 << 4
+    }
+    if (number & 1 << 1) {
+        total += 1 << 1
+    }
+    if (number & 1 << 9) {
+        total += 1 << 6
+    } else if (number & 1 << 6) {
+        total += 1 << 6
+    }
+    if (number & 1 << 8) {
+        total += 1 << 8
+    }
+    return total
 }
 
 function get_rank_emote(rank) {
@@ -136,6 +158,15 @@ function get_rank_emote(rank) {
     }
     if (rank == "D") {
         return "<:D_Emote:649752265095380993>"
+    }
+    if(rank == "XH") {
+        return "<:SSH_Emote:649752313677873184>"
+    }
+    if(rank == "X"){
+        return "<:SS_Emote:649752304357998632>"
+    }
+    if (rank == "SH") {
+        return "<:SH_Emote:649752294665093140>"
     }
     if (rank == "S") {
         return "<:S_Emote:649752285613785121>"
@@ -240,5 +271,6 @@ module.exports = {
     get_miss_emote,
     secondto,
     range,
-    sleep
+    sleep,
+    num_to_num_but_diff_increase_mods_only
 }
