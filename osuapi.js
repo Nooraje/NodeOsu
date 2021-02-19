@@ -1,12 +1,5 @@
 const rp = require('request-promise');
 const config = require("./jsons/configs.json")
-const {
-	Beatmap,
-	Osu: {
-		DifficultyCalculator,
-		PerformanceCalculator
-	}
-} = require('osu-bpdpc')
 var ojsama = require("ojsama");
 api_key = config.osuapikey
 base_api = "https://osu.ppy.sh/api/"
@@ -82,7 +75,7 @@ function get_pp(beatmapid, acc_percent, combo, nmiss, mods) {
 		});
 		var max_combo = map.max_combo();
 		combo = combo || max_combo;
-		console.log(pp.toString());
+		//console.log(pp.toString());
 		return pp.total.toFixed(0)
 	})
 }
@@ -105,7 +98,7 @@ function get_if_fc_pp(beatmapid, acc_percent, combo, mods) {
 		});
 		var max_combo = map.max_combo();
 		combo = combo || max_combo;
-		console.log(pp.toString());
+		//console.log(pp.toString());
 		return pp.total.toFixed(0)
 	})
 }

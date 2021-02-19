@@ -1,0 +1,30 @@
+{
+  "name": "nodeosu",
+  "version": "1.0.0",
+  "description": "Basic osu bot based on nodejs",
+  "main": "bot.js",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "moment": "^2.29.1",
+    "ojsama": "^2.1.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nooraje/NodeOsu.git"
+  },
+  "keywords": [
+    "osu"
+  ],
+  "author": "Nora",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nooraje/NodeOsu/issues"
+  },
+  "homepage": "https://github.com/Nooraje/NodeOsu#readme"
+}

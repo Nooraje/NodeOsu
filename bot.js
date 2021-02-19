@@ -1,8 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const {
-    token
-} = require('./jsons/configs.json');
+const { token } = require('./jsons/configs.json');
 
 const client = new Discord.Client({ disableMentions: 'everyone' });
 client.commands = new Discord.Collection();

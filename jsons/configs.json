@@ -1,5 +1,5 @@
 {
-    "apikey": "osuapikey",
+    "osuapikey": "osuapikey",
     "token": "discordbottoken",
     "prefix": "!"
 }
