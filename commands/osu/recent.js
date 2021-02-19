@@ -66,7 +66,8 @@ module.exports = {
 					}
 					beatmap_uid = getbeatmap[0]["beatmap_id"] * 1
 					beatmap_maxcombo = getbeatmap[0]["max_combo"] * 1
-					let iffcacc = api.accuracyCalc(c300 + cmiss, c100, c50, 0)
+					cmisshalf = cmiss / 2
+					let iffcacc = api.accuracyCalc(parseInt(c300) + parseInt(cmisshalf), parseInt(c100) + parseInt(cmisshalf), c50, 0)
 					api.get_if_fc_pp(parseInt(beatmap_uid), iffcacc * 1, parseInt(beatmap_maxcombo), parseInt(recent[0]["enabled_mods"])).then(function (iffcpp) {
 						recentdesc += (`IF FC: **${iffcpp}**pp | x${recent[0]["maxcombo"]}/**${beatmap_maxcombo}**\n▸ ${acc}% | ${c100 * 1}x${api.get_onehundred_emote()} | ${c50 * 1}x${api.get_fifty_emote()} | ${cmiss * 1}${api.get_miss_emote()}\n▸ Try **#${try_counter}** | ${api.secondto(saniye)}${comptext}`)
 						api.get_user(username).then(getuser => {

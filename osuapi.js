@@ -76,7 +76,7 @@ function get_pp(beatmapid, acc_percent, combo, nmiss, mods) {
 		var max_combo = map.max_combo();
 		combo = combo || max_combo;
 		//console.log(pp.toString());
-		return pp.total.toFixed(0)
+		return Math.round( pp.total * 1e0 ) / 1e0
 	})
 }
 
@@ -99,7 +99,7 @@ function get_if_fc_pp(beatmapid, acc_percent, combo, mods) {
 		var max_combo = map.max_combo();
 		combo = combo || max_combo;
 		//console.log(pp.toString());
-		return pp.total.toFixed(0)
+		return Math.round( pp.total * 1e0 ) / 1e0
 	})
 }
 
@@ -176,14 +176,14 @@ function get_rank_emote(rank) {
 	}
 }
 
-function accuracyCalc(c300, c100, c50, misses) {
-	var totalHits = c300 * 1 + c100 * 1 + c50 * 1 + misses * 1;
-	var accuracy = 0.0;
-	if (totalHits > 0) {
-		accuracy = (c50 * 50.0 + c100 * 100.0 + c300 * 300.0) / (totalHits * 300.0) * 100;
+function accuracyCalc(n300, n100, n50, misses) {
+	var totalHits = n300 * 1 + n100 * 1 + n50 * 1 + misses * 1;
+
+	if (totalHits <= 0) {
+		return 0.0
 	}
-	return accuracy.toFixed(2)
-};
+	return ((n50 * 50.0 + n100 * 100.0 + n300 * 300.0) / (totalHits * 300.0) * 100).toFixed(2)
+}
 
 function randomnumber(x) {
 	return Math.floor(Math.random() * x);
