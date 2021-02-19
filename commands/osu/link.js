@@ -1,5 +1,4 @@
 const link = require("../../jsons/links.json")
-const Discord = require("discord.js");
 const fs = require('fs');
 
 module.exports = {
@@ -12,6 +11,7 @@ module.exports = {
 	guildOnly: true,
 	permissions: false,
 	async execute(client, message, args) {
+		if(link[message.author.id] != null) return message.channel.send("Already Linked! !unlink")
 		var nick = args[0]
 		link[message.author.id] = {
 			nick: nick
