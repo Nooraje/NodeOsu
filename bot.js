@@ -1,25 +1,30 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const config = require('./jsons/configs.json');
-const prefixes = require("./jsons/prefixes.json")
+const {
+    token
+} = require('./jsons/configs.json');
 
-const client = new Discord.Client();
+const client = new Discord.Client({ disableMentions: 'everyone' });
 client.commands = new Discord.Collection();
-const cooldowns = new Discord.Collection();
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandFolders = fs.readdirSync('./commands');
 
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    client.commands.set(command.name, command);
+for (const folder of commandFolders) {
+    const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
+    for (const file of commandFiles) {
+        const command = require(`./commands/${folder}/${file}`);
+        client.commands.set(command.name, command);
+    }
 }
+
+const cooldowns = new Discord.Collection();
 
 client.once('ready', () => {
     console.log('Ready!');
-    //client.channels.cache.get("780451569786290236").join();
 });
 
 client.on('message', message => {
+    let prefix;
     try {
         prefix = prefixes[message.guild.id].prefix
     } catch {
@@ -42,7 +47,7 @@ client.on('message', message => {
     if (command.permissions) {
         const authorPerms = message.channel.permissionsFor(message.author);
         if (!authorPerms || !authorPerms.has(command.permissions)) {
-            return message.reply('You can\'t do this!');
+            return message.reply('You can not do this!');
         }
     }
 
@@ -77,15 +82,11 @@ client.on('message', message => {
     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
     try {
-        command.execute(message, args);
+        command.execute(client, message, args)
     } catch (error) {
         console.error(error);
         message.reply('there was an error trying to execute that command!');
     }
 });
 
-client.on("guildCreate", guild => {
-    console.log("Joined a new guild: " + guild.name);
-})
-
-client.login(config.token);
+client.login(token);
